@@ -1,0 +1,42 @@
+.repository-result-container {
+  margin: 2rem;
+  display: flex;
+  justify-content: center;
+  color: rgb(65, 65, 65);
+}
+
+.repository-table {
+  width: 85%;
+  margin-top: 1rem;
+  border-spacing: 0.1rem 1em;
+}
+
+.repository-table tr {
+  width: 70%;
+  height: 5rem;
+  text-align: center;
+}
+
+.repository-table td {
+  padding: 0 1rem;
+}
+
+.repository-table tr:nth-of-type(odd) {
+  background: #c0cacf;
+}
+
+.repository-table tr:nth-of-type(even) {
+  background: #e6e4e4;
+}
+
+.image-data img {
+  height: 4.2rem;
+  width: 4.2rem;
+}
+
+.no-result {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 6rem;
+}

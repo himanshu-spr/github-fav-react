@@ -1,0 +1,39 @@
+.navbar {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  background-color: #455a64;
+}
+
+.link-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 1rem;
+  padding: 0;
+}
+
+.search-container {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.link-container a {
+  position: relative;
+}
+
+.fav-icon {
+  font-size: 1.4rem;
+  left: -1.7rem;
+  top: 0.1rem;
+  position: absolute;
+}

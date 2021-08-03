@@ -1,0 +1,28 @@
+.favorites-table {
+  width: 85%;
+  margin-top: 1rem;
+  border-spacing: 0.1rem 1em;
+}
+
+.favorites-table tr {
+  width: 70%;
+  height: 5rem;
+  text-align: center;
+}
+
+.favorites-table td {
+  padding: 0 1rem;
+}
+
+.favorites-table tr:nth-of-type(odd) {
+  background: #c0cacf;
+}
+
+.favorites-table tr:nth-of-type(even) {
+  background: #e6e4e4;
+}
+
+.fav-image-data img {
+  height: 4.2rem;
+  width: 4.2rem;
+}
