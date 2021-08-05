@@ -2,6 +2,9 @@
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   background-color: #455a64;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .link-container {

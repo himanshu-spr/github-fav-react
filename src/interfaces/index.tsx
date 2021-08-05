@@ -9,12 +9,22 @@ export interface Repository {
   updated_at: string;
 }
 
+export interface GithubAPIResponse {
+  total_count: number;
+  incomplete_results: boolean;
+  items: Repository[];
+}
+
+interface StoreAction {
+  type: string;
+  payload: any;
+}
+
 export interface RepositoryListItemProps {
   repository: Repository;
 }
 
-export interface RepositoryAction {
-  type: string;
+export interface RepositoryAction extends StoreAction {
   payload: Repository[] | string;
 }
 
@@ -33,9 +43,16 @@ export interface RepositoryListProps {
   repository: Repository[];
 }
 
-export interface FavoritesAction {
-  type: string;
+export interface FavoritesAction extends StoreAction {
   payload: Repository;
+}
+
+export interface SearchValueAction extends StoreAction {
+  payload: string;
+}
+
+export interface SearchValueState {
+  searchValue: string;
 }
 
 export interface FavoritesState {
