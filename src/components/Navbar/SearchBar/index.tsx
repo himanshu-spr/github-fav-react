@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./SearchBar.css";
-import { getData } from "../../../api/githubData";
+import { getData } from "../../../clients/rest";
 import { useDispatch } from "react-redux";
 import {
   fetchRepositoryFailure,
@@ -18,11 +18,10 @@ const SearchBar = () => {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      let data = [];
       try {
         dispatch(setSearchValue(search));
         dispatch(fetchRepositoryRequest());
-        data = await getData(search, "");
+        const data = await getData(search, "");
         dispatch(fetchRepositorySuccess(data));
       } catch (error) {
         dispatch(fetchRepositoryFailure(error.message));

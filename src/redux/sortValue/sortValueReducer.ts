@@ -1,8 +1,9 @@
 import { SET_SORT_VALUE } from "./sortValueTypes";
 import { SearchValueAction } from "../../interfaces";
+import { SORT_TYPES } from "../../constants/sort";
 
 const initialState = {
-  sortValue: "",
+  sortValue: SORT_TYPES.BEST_MATCH,
 };
 
 const reducer = (state = initialState, action: SearchValueAction) => {

@@ -1,16 +1,19 @@
 import axios from "axios";
+import { SORT_TYPES } from "../../constants/sort";
+import { GithubResponse } from "../../interfaces";
 
 export const getData = async (searchValue: string, sort: string) => {
   let searchString =
     "https://api.github.com/search/repositories?q=" + searchValue;
 
-  if (!sort) {
+  if (sort !== SORT_TYPES.BEST_MATCH) {
     searchString = searchString + "&sort=" + sort;
   }
 
-  const { items = [] } = (await axios.get(searchString)).data || {};
+  const { items = [] } =
+    (await axios.get<GithubResponse>(searchString)).data || {};
 
-  const filterData = items.map((repository: any) => {
+  const filterData = items.map((repository) => {
     return {
       id: repository.id,
       name: repository.name,

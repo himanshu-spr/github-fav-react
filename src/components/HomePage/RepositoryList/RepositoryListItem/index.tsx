@@ -11,15 +11,13 @@ const RepositoryListItem = ({ repository }: RepositoryListItemProps) => {
   const dispatch = useDispatch();
 
   const favChangeHandler = useCallback(() => {
-    const curFavorite = favorite;
-    setFavorite((prevState) => {
-      return !prevState;
-    });
-    if (curFavorite) {
+    if (favorite) {
       dispatch(removeRepository(repository));
     } else {
       dispatch(addRepository(repository));
     }
+
+    setFavorite((prevState) => !prevState);
   }, [favorite, repository, dispatch]);
 
   return (
@@ -43,4 +41,4 @@ const RepositoryListItem = ({ repository }: RepositoryListItemProps) => {
   );
 };
 
-export default RepositoryListItem;
+export default React.memo(RepositoryListItem);

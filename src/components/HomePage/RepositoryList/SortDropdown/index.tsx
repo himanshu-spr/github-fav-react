@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import "./SortDropdown.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../../../api/githubData";
+import { getData } from "../../../../clients/rest";
 import { RootState } from "../../../../redux/rootReducer";
 import {
   fetchRepositoryFailure,
@@ -9,54 +9,76 @@ import {
   fetchRepositorySuccess,
   setSortValue,
 } from "../../../../redux";
-import { stat } from "fs";
+
+import { SORT_TYPES } from "../../../../constants/sort";
+
+const getOptions = () => {
+  const options = Object.values(SORT_TYPES);
+  return options.map((option) => {
+    return <option value={option}>{option}</option>;
+  });
+};
+
+const getSearchData = (state: RootState) => {
+  return state.search;
+};
+
+const getSortData = (state: RootState) => {
+  return state.sort;
+};
 
 const SortDropdown = () => {
   const dispatch = useDispatch();
-  const searchData = useSelector((state: RootState) => {
-    return state.search;
-  });
-  const sortData = useSelector((state: RootState) => {
-    return state.sort;
-  });
+  const searchData = useSelector(getSearchData);
+  const sortData = useSelector(getSortData);
+
+  const handleMostStars = useCallback(async () => {
+    try {
+      dispatch(fetchRepositoryRequest());
+      const data = await getData(searchData.searchValue, "stars&order=desc");
+      dispatch(fetchRepositorySuccess(data));
+    } catch (error) {
+      dispatch(fetchRepositoryFailure(error.message));
+    }
+  }, [dispatch, searchData.searchValue]);
+  const handleFewestStars = useCallback(async () => {
+    try {
+      dispatch(fetchRepositoryRequest());
+      const data = await getData(searchData.searchValue, "stars&order=asc");
+      dispatch(fetchRepositorySuccess(data));
+    } catch (error) {
+      dispatch(fetchRepositoryFailure(error.message));
+    }
+  }, [dispatch, searchData.searchValue]);
+
+  const handleBestMatch = useCallback(async () => {
+    try {
+      dispatch(fetchRepositoryRequest());
+      const data = await getData(searchData.searchValue, "");
+      dispatch(fetchRepositorySuccess(data));
+    } catch (error) {
+      dispatch(fetchRepositoryFailure(error.message));
+    }
+  }, [dispatch, searchData.searchValue]);
 
   const changeHandler = useCallback(
-    async (e: React.ChangeEvent<HTMLSelectElement>) => {
-      let data = [];
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
       dispatch(setSortValue(e.target.value));
       switch (e.target.value) {
-        case "most stars":
-          try {
-            dispatch(fetchRepositoryRequest());
-            data = await getData(searchData.searchValue, "stars&order=desc");
-            dispatch(fetchRepositorySuccess(data));
-          } catch (error) {
-            dispatch(fetchRepositoryFailure(error.message));
-          }
+        case SORT_TYPES.MOST_STARS:
+          handleMostStars();
           break;
-        case "fewest stars":
-          try {
-            dispatch(fetchRepositoryRequest());
-            data = await getData(searchData.searchValue, "stars&order=asc");
-            dispatch(fetchRepositorySuccess(data));
-          } catch (error) {
-            dispatch(fetchRepositoryFailure(error.message));
-          }
+        case SORT_TYPES.FEWEST_STARS:
+          handleFewestStars();
           break;
-        case "best match":
-          try {
-            dispatch(fetchRepositoryRequest());
-            data = await getData(searchData.searchValue, "");
-            dispatch(fetchRepositorySuccess(data));
-          } catch (error) {
-            dispatch(fetchRepositoryFailure(error.message));
-          }
+        case SORT_TYPES.BEST_MATCH:
+          handleBestMatch();
           break;
         default:
           break;
       }
     },
-    [dispatch, searchData.searchValue]
+    [dispatch, handleMostStars, handleFewestStars, handleBestMatch]
   );
 
   return (
@@ -69,9 +91,7 @@ const SortDropdown = () => {
           onChange={changeHandler}
           value={sortData.sortValue}
         >
-          <option value="best match">Best match</option>
-          <option value="most stars">Most stars</option>
-          <option value="fewest stars">Fewest stars</option>
+          {getOptions()}
         </select>
       </div>
     </div>

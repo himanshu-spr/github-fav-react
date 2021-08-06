@@ -30,4 +30,4 @@ const FavoriteListItem = ({ favorite }: FavoriteListItemProps) => {
   );
 };
 
-export default FavoriteListItem;
+export default React.memo(FavoriteListItem);

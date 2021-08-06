@@ -4,16 +4,18 @@ import "./RepositoryList.css";
 import RepositoryListItem from "./RepositoryListItem";
 import SortDropdown from "./SortDropdown";
 
-const RepositoryList = (props: RepositoryListProps) => {
-  return props.repository.length === 0 ? (
-    <div className="no-result">No search results!</div>
-  ) : (
+const RepositoryList = ({ repository }: RepositoryListProps) => {
+  if (!repository.length) {
+    return <div className="no-result">No search results!</div>;
+  }
+
+  return (
     <div className="repository-result-container">
       <SortDropdown />
       <table className="repository-table">
-        {props.repository.map((repository) => {
+        {repository.map((repository) => {
           return (
-            <RepositoryListItem repository={repository} key={repository.id} />
+            <RepositoryListItem key={repository.id} repository={repository} />
           );
         })}
       </table>

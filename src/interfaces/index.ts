@@ -9,10 +9,10 @@ export interface Repository {
   updated_at: string;
 }
 
-export interface GithubAPIResponse {
+export interface GithubResponse {
   total_count: number;
   incomplete_results: boolean;
-  items: Repository[];
+  items: any[];
 }
 
 interface StoreAction {

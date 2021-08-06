@@ -8,7 +8,6 @@ const initialState = {
 const reducer = (state = initialState, action: FavoritesAction) => {
   switch (action.type) {
     case ADD_REPOSITORY:
-      console.log(state);
       return {
         ...state,
         favorites: [...state.favorites, action.payload],
