@@ -1,8 +1,8 @@
 import { SET_SEARCH_VALUE } from "./searchValueTypes";
-import { SearchValueAction } from "../../interfaces";
+import { SearchState, SearchValueAction } from "../../interfaces";
 
-const initialState = {
-  searchValue: "best match",
+const initialState: SearchState = {
+  searchValue: "",
 };
 
 const reducer = (state = initialState, action: SearchValueAction) => {

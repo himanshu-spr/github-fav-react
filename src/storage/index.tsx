@@ -9,10 +9,10 @@ export function load(key: string, defaultValue: any = "") {
   try {
     const serializedState = localStorage.getItem(key);
     if (serializedState === null) return defaultValue;
-    const jsonState = JSON.parse(serializedState);
 
+    const jsonState = JSON.parse(serializedState);
     return jsonState;
   } catch (e) {
-    return defaultValue;
+    throw e;
   }
 }

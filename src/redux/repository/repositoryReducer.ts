@@ -3,9 +3,9 @@ import {
   FETCH_REPOSITORY_SUCCESS,
   FETCH_REPOSITORY_FAILURE,
 } from "./repositoryTypes";
-import { RepositoryAction } from "../../interfaces";
+import { RepositoryAction, RepositoryState } from "../../interfaces";
 
-const initialState = {
+const initialState: RepositoryState = {
   loading: false,
   repository: [],
   error: "",

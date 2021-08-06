@@ -10,6 +10,6 @@ const store = createStore(
   applyMiddleware(logger, thunk)
 );
 
-store.subscribe(() => save(store.getState().favorites, "favorites"));
+store.subscribe(() => save(store.getState(), "favorites"));
 
 export default store;

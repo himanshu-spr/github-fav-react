@@ -1,7 +1,7 @@
 import { ADD_REPOSITORY, REMOVE_REPOSITORY } from "./favoritesTypes";
 import { FavoritesAction, FavoritesState, Repository } from "../../interfaces";
 
-const initialState = {
+const initialState: FavoritesState = {
   favorites: [],
 };
 

@@ -34,7 +34,7 @@ export interface ProductsDispatch {
 }
 
 export interface RepositoryState {
-  loading: string;
+  loading: boolean;
   repository: Repository[];
   error: string;
 }
@@ -57,6 +57,14 @@ export interface SearchValueState {
 
 export interface FavoritesState {
   favorites: Repository[];
+}
+
+export interface SortState {
+  sortValue: string;
+}
+
+export interface SearchState {
+  searchValue: string;
 }
 
 export interface FavoriteListItemProps {

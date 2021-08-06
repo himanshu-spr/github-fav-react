@@ -1,8 +1,8 @@
 import { SET_SORT_VALUE } from "./sortValueTypes";
-import { SearchValueAction } from "../../interfaces";
+import { SearchValueAction, SortState } from "../../interfaces";
 import { SORT_TYPES } from "../../constants/sort";
 
-const initialState = {
+const initialState: SortState = {
   sortValue: SORT_TYPES.BEST_MATCH,
 };
 
