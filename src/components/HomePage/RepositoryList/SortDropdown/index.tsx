@@ -14,18 +14,11 @@ import { SORT_TYPES } from "../../../../constants/sort";
 
 const getOptions = () => {
   const options = Object.values(SORT_TYPES);
-  return options.map((option) => {
-    return <option value={option}>{option}</option>;
-  });
+  return options.map((option) => <option value={option}>{option}</option>);
 };
 
-const getSearchData = (state: RootState) => {
-  return state.search;
-};
-
-const getSortData = (state: RootState) => {
-  return state.sort;
-};
+const getSearchData = (state: RootState) => state.search;
+const getSortData = (state: RootState) => state.sort;
 
 const SortDropdown = () => {
   const dispatch = useDispatch();

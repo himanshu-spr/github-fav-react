@@ -5,9 +5,7 @@ import { RootState } from "../../redux/rootReducer";
 import "./Favorites.css";
 import FavoriteList from "./FavoriteList";
 
-const getFavoritesData = (state: RootState) => {
-  return state.favorites;
-};
+const getFavoritesData = (state: RootState) => state.favorites;
 
 const Favorites = () => {
   const favoritesData: FavoritesState = useSelector(getFavoritesData);

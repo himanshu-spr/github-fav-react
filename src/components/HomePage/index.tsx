@@ -5,9 +5,7 @@ import { RepositoryState } from "../../interfaces";
 import RepositoryList from "./RepositoryList";
 import "./HomePage.css";
 
-const getRepositoryData = (state: RootState) => {
-  return state.repository;
-};
+const getRepositoryData = (state: RootState) => state.repository;
 
 const HomePage = () => {
   const repositoryData: RepositoryState = useSelector(getRepositoryData);
