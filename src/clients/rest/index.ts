@@ -1,6 +1,5 @@
 import axios from "axios";
 import { SORT_TYPES } from "../../constants/sort";
-import { GithubResponse } from "../../interfaces";
 
 export const getData = async (searchValue: string, sort: string) => {
   let searchString =
@@ -10,10 +9,9 @@ export const getData = async (searchValue: string, sort: string) => {
     searchString = searchString + "&sort=" + sort;
   }
 
-  const { items = [] } =
-    (await axios.get<GithubResponse>(searchString)).data || {};
+  const { items = [] } = (await axios.get(searchString)).data || {};
 
-  const filterData = items.map((repository) => {
+  const filterData = items.map((repository: any) => {
     return {
       id: repository.id,
       name: repository.name,

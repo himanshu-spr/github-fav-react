@@ -1,5 +1,5 @@
 import { ADD_REPOSITORY, REMOVE_REPOSITORY } from "./favoritesTypes";
-import { FavoritesAction, Repository } from "../../interfaces";
+import { FavoritesAction, FavoritesState, Repository } from "../../interfaces";
 
 const initialState = {
   favorites: [],
