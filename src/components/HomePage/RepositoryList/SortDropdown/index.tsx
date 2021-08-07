@@ -7,7 +7,11 @@ import { setSortValue } from "../../../../redux";
 
 const getOptions = () => {
   const options = Object.values(SORT_TYPES);
-  return options.map((option) => <option value={option}>{option}</option>);
+  return options.map((option) => (
+    <option key={option} value={option}>
+      {option}
+    </option>
+  ));
 };
 
 const getSortData = (state: RootState) => state.sort;

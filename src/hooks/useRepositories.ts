@@ -19,8 +19,6 @@ export default function useRepositories() {
     searchString = searchString + "&sort=stars&order=" + sortType;
   }
 
-  console.log(searchString);
-
   const { status, data, error } = useQuery(
     ["repositories", searchData.searchValue, sortData.sortValue],
     () => axios.get(searchString).then((res) => res.data),
