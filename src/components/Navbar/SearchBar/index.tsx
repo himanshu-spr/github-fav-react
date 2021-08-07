@@ -1,14 +1,8 @@
 import React, { useState, useCallback } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./SearchBar.css";
-import { getData } from "../../../clients/rest";
 import { useDispatch } from "react-redux";
-import {
-  fetchRepositoryFailure,
-  fetchRepositoryRequest,
-  fetchRepositorySuccess,
-  setSearchValue,
-} from "../../../redux";
+import { setSearchValue } from "../../../redux";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
@@ -17,15 +11,7 @@ const SearchBar = () => {
   const submitHandler = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
-      try {
-        dispatch(setSearchValue(search));
-        dispatch(fetchRepositoryRequest());
-        const data = await getData(search, "");
-        dispatch(fetchRepositorySuccess(data));
-      } catch (error) {
-        dispatch(fetchRepositoryFailure(error.message));
-      }
+      dispatch(setSearchValue(search));
     },
     [search, dispatch]
   );

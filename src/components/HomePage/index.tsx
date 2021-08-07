@@ -1,24 +1,25 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/rootReducer";
-import { RepositoryState } from "../../interfaces";
-import RepositoryList from "./RepositoryList";
 import "./HomePage.css";
-
-const getRepositoryData = (state: RootState) => state.repository;
+import useRepositories from "../../hooks/useRepositories";
+import { isError } from "../../helpers";
+import RepositoryList from "./RepositoryList";
 
 const HomePage = () => {
-  const repositoryData: RepositoryState = useSelector(getRepositoryData);
+  const { status, data, error } = useRepositories();
 
-  if (repositoryData.loading) {
+  if (status === "loading") {
     return <p className="loading">Loading...</p>;
   }
 
-  if (repositoryData.error) {
-    <p className="error">{repositoryData.error}</p>;
+  if (status === "error") {
+    if (isError(error)) {
+      return <p className="error">{error.message}</p>;
+    } else {
+      return <p className="error">Error. Try Again</p>;
+    }
   }
 
-  return <RepositoryList repository={repositoryData.repository} />;
+  return data.length ? <RepositoryList repository={data} /> : null;
 };
 
 export default HomePage;
