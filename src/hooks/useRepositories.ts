@@ -14,8 +14,12 @@ export default function useRepositories() {
     "https://api.github.com/search/repositories?q=" + searchData.searchValue;
 
   if (sortData.sortValue !== SORT_TYPES.BEST_MATCH) {
-    searchString = searchString + "&sort=" + sortData.sortValue;
+    const sortType =
+      sortData.sortValue === SORT_TYPES.MOST_STARS ? "desc" : "asc";
+    searchString = searchString + "&sort=stars&order=" + sortType;
   }
+
+  console.log(searchString);
 
   const { status, data, error } = useQuery(
     ["repositories", searchData.searchValue, sortData.sortValue],
