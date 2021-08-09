@@ -1,23 +1,41 @@
 import React, { useMemo } from "react";
-import { RepositoryListProps } from "../../../interfaces";
+import { RepositoryListProps, FavoriteData } from "../../../interfaces";
 import "./RepositoryList.css";
 import RepositoryListItem from "./RepositoryListItem";
 import SortDropdown from "./SortDropdown";
 import { RootState } from "../../../redux/rootReducer";
 import { useSelector } from "react-redux";
+import { useCallback } from "react";
 
 const getFavoritesData = (state: RootState) => state.favorites;
 
+const getFavId = (favorites: FavoriteData[]) => {
+  const favIdSet = new Set();
+
+  favorites && favorites.forEach((favorite) => favIdSet.add(favorite.id));
+  return favIdSet;
+};
+
 const RepositoryList = ({ repository }: RepositoryListProps) => {
   const favoritesData = useSelector(getFavoritesData);
-  const favIDs = useMemo(
-    () => favoritesData.favorites.map((fav) => fav.id),
+
+  const favIdSet = useMemo(
+    () => getFavId(favoritesData.favorites),
     [favoritesData.favorites]
   );
 
-  const isFavoriteData = useMemo(
-    () => repository.map((repository) => favIDs.includes(repository.id)),
-    [favIDs, repository]
+  const renderOptions = useCallback(
+    () =>
+      repository.map((repository) => {
+        return (
+          <RepositoryListItem
+            key={repository.id}
+            repository={repository}
+            isFavorite={favIdSet.has(repository.id)}
+          />
+        );
+      }),
+    [repository, favIdSet]
   );
 
   if (!repository.length) {
@@ -27,17 +45,7 @@ const RepositoryList = ({ repository }: RepositoryListProps) => {
   return (
     <div className="repository-result-container">
       <SortDropdown />
-      <table className="repository-table">
-        {repository.map((repository, index) => {
-          return (
-            <RepositoryListItem
-              key={repository.id}
-              repository={repository}
-              isFavorite={isFavoriteData[index]}
-            />
-          );
-        })}
-      </table>
+      <table className="repository-table">{renderOptions()}</table>
     </div>
   );
 };

@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { RepositoryListItemProps } from "../../../../interfaces";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoHeart } from "react-icons/io5";
 import "./RepositoryListItem.css";
 import { useDispatch } from "react-redux";
 import { addRepository, removeRepository } from "../../../../redux";
+import { getFavAction } from "../../../../helpers";
 
 const RepositoryListItem = ({
   repository,
@@ -13,10 +14,11 @@ const RepositoryListItem = ({
   const dispatch = useDispatch();
 
   const favChangeHandler = useCallback(() => {
+    const favAction = getFavAction(repository);
     if (isFavorite) {
-      dispatch(removeRepository(repository));
+      dispatch(removeRepository(favAction));
     } else {
-      dispatch(addRepository(repository));
+      dispatch(addRepository(favAction));
     }
   }, [isFavorite, repository, dispatch]);
 

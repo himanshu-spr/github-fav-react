@@ -10,10 +10,16 @@ import {
   setSortValue,
 } from "../../../../redux";
 
-import { SORT_TYPES } from "../../../../constants/sort";
+import { sort_types } from "../../../../constants/sort";
+
+export const SORT_LABELS = {
+  [sort_types.BEST_MATCH]: "Best Match",
+  [sort_types.MOST_STARS]: "Most Stars",
+  [sort_types.FEWEST_STARS]: "Fewest Stars",
+};
 
 const getOptions = () => {
-  const options = Object.values(SORT_TYPES);
+  const options = Object.values(SORT_LABELS);
   return options.map((option) => (
     <option key={option} value={option}>
       {option}

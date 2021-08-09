@@ -1,13 +1,18 @@
 import axios from "axios";
-import { SORT_TYPES } from "../../constants/sort";
-import { GithubResponse, Repository } from "../../interfaces";
+import { SORT_LABELS } from "../../components/HomePage/RepositoryList/SortDropdown";
+import {
+  FavoriteData,
+  GithubResponse,
+  Repository,
+  RepoResponse,
+} from "../../interfaces";
 
 export const getData = async (searchValue: string, sort: string) => {
   let searchString =
     "https://api.github.com/search/repositories?q=" + searchValue;
 
-  if (sort !== SORT_TYPES.BEST_MATCH) {
-    const sortOrder = sort === SORT_TYPES.MOST_STARS ? "desc" : "asc";
+  if (sort !== SORT_LABELS.BEST_MATCH) {
+    const sortOrder = sort === SORT_LABELS.MOST_STARS ? "desc" : "asc";
     searchString = searchString + "&sort=stars&order=" + sortOrder;
   }
 
@@ -25,5 +30,22 @@ export const getData = async (searchValue: string, sort: string) => {
       description: repository.description,
     };
   });
+  return filterData;
+};
+
+export const getFavData = async (favorite: FavoriteData) => {
+  let searchString = "https://api.github.com/repos/" + favorite.fullname;
+
+  const res = (await axios.get<RepoResponse>(searchString)).data || {};
+
+  const filterData: Repository = {
+    id: res.id,
+    name: res.name,
+    full_name: res.full_name,
+    avatar: res.owner.avatar_url,
+    url: res.html_url,
+    stars: res.stargazers_count,
+    description: res.description,
+  };
   return filterData;
 };

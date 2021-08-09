@@ -1,9 +1,9 @@
 import { SET_SORT_VALUE } from "./sortValueTypes";
 import { SearchValueAction, SortState } from "../../interfaces";
-import { SORT_TYPES } from "../../constants/sort";
+import { SORT_LABELS } from "../../components/HomePage/RepositoryList/SortDropdown";
 
 const initialState: SortState = {
-  sortValue: SORT_TYPES.BEST_MATCH,
+  sortValue: SORT_LABELS.BEST_MATCH,
 };
 
 const reducer = (state = initialState, action: SearchValueAction) => {

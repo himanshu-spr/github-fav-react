@@ -1,5 +1,5 @@
 import { ADD_REPOSITORY, REMOVE_REPOSITORY } from "./favoritesTypes";
-import { FavoritesAction, FavoritesState, Repository } from "../../interfaces";
+import { FavoritesAction, FavoritesState } from "../../interfaces";
 
 const initialState: FavoritesState = {
   favorites: [],
@@ -16,7 +16,7 @@ const reducer = (state = initialState, action: FavoritesAction) => {
     case REMOVE_REPOSITORY:
       return {
         ...state,
-        favorites: state.favorites.filter((favorite: Repository) => {
+        favorites: state.favorites.filter((favorite) => {
           return favorite.id !== action.payload.id;
         }),
       };
