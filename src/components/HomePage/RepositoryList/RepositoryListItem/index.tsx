@@ -6,8 +6,9 @@ import "./RepositoryListItem.css";
 import { useDispatch } from "react-redux";
 import { addRepository, removeRepository } from "../../../../redux";
 
-const RepositoryListItem = ({ repository }: RepositoryListItemProps) => {
-  const [favorite, setFavorite] = useState(false);
+const RepositoryListItem = ({ repository, fav }: RepositoryListItemProps) => {
+  const [favorite, setFavorite] = useState(fav);
+
   const dispatch = useDispatch();
 
   const favChangeHandler = useCallback(() => {

@@ -14,7 +14,11 @@ import { SORT_TYPES } from "../../../../constants/sort";
 
 const getOptions = () => {
   const options = Object.values(SORT_TYPES);
-  return options.map((option) => <option value={option}>{option}</option>);
+  return options.map((option) => (
+    <option key={option} value={option}>
+      {option}
+    </option>
+  ));
 };
 
 const getSearchData = (state: RootState) => state.search;
@@ -25,53 +29,25 @@ const SortDropdown = () => {
   const searchData = useSelector(getSearchData);
   const sortData = useSelector(getSortData);
 
-  const handleMostStars = useCallback(async () => {
-    try {
-      dispatch(fetchRepositoryRequest());
-      const data = await getData(searchData.searchValue, "stars&order=desc");
-      dispatch(fetchRepositorySuccess(data));
-    } catch (error) {
-      dispatch(fetchRepositoryFailure(error.message));
-    }
-  }, [dispatch, searchData.searchValue]);
-  const handleFewestStars = useCallback(async () => {
-    try {
-      dispatch(fetchRepositoryRequest());
-      const data = await getData(searchData.searchValue, "stars&order=asc");
-      dispatch(fetchRepositorySuccess(data));
-    } catch (error) {
-      dispatch(fetchRepositoryFailure(error.message));
-    }
-  }, [dispatch, searchData.searchValue]);
-
-  const handleBestMatch = useCallback(async () => {
-    try {
-      dispatch(fetchRepositoryRequest());
-      const data = await getData(searchData.searchValue, "");
-      dispatch(fetchRepositorySuccess(data));
-    } catch (error) {
-      dispatch(fetchRepositoryFailure(error.message));
-    }
-  }, [dispatch, searchData.searchValue]);
+  const handleDataDispatch = useCallback(
+    async (sortValue) => {
+      try {
+        dispatch(fetchRepositoryRequest());
+        const data = await getData(searchData.searchValue, sortValue);
+        dispatch(fetchRepositorySuccess(data));
+      } catch (error) {
+        dispatch(fetchRepositoryFailure(error.message));
+      }
+    },
+    [dispatch, searchData.searchValue]
+  );
 
   const changeHandler = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       dispatch(setSortValue(e.target.value));
-      switch (e.target.value) {
-        case SORT_TYPES.MOST_STARS:
-          handleMostStars();
-          break;
-        case SORT_TYPES.FEWEST_STARS:
-          handleFewestStars();
-          break;
-        case SORT_TYPES.BEST_MATCH:
-          handleBestMatch();
-          break;
-        default:
-          break;
-      }
+      handleDataDispatch(e.target.value);
     },
-    [dispatch, handleMostStars, handleFewestStars, handleBestMatch]
+    [dispatch, handleDataDispatch]
   );
 
   return (

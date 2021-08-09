@@ -11,6 +11,7 @@ const Favorites = () => {
   const favoritesData: FavoritesState = useSelector(getFavoritesData);
 
   const favRepositories = favoritesData.favorites;
+
   return (
     <div className="fav-container">
       {favRepositories.length === 0 ? (
