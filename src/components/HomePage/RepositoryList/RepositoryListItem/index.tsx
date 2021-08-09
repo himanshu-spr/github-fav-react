@@ -6,20 +6,19 @@ import "./RepositoryListItem.css";
 import { useDispatch } from "react-redux";
 import { addRepository, removeRepository } from "../../../../redux";
 
-const RepositoryListItem = ({ repository, fav }: RepositoryListItemProps) => {
-  const [favorite, setFavorite] = useState(fav);
-
+const RepositoryListItem = ({
+  repository,
+  isFavorite,
+}: RepositoryListItemProps) => {
   const dispatch = useDispatch();
 
   const favChangeHandler = useCallback(() => {
-    if (favorite) {
+    if (isFavorite) {
       dispatch(removeRepository(repository));
     } else {
       dispatch(addRepository(repository));
     }
-
-    setFavorite((prevState) => !prevState);
-  }, [favorite, repository, dispatch]);
+  }, [isFavorite, repository, dispatch]);
 
   return (
     <>
@@ -31,7 +30,7 @@ const RepositoryListItem = ({ repository, fav }: RepositoryListItemProps) => {
         <td className="description-data">{repository.description}</td>
         <td className="stars-data">{repository.stars}</td>
         <td onClick={favChangeHandler}>
-          {favorite ? (
+          {isFavorite ? (
             <IoHeart className="fav-select-fill-icon" />
           ) : (
             <IoHeartOutline className="fav-select-outline-icon" />

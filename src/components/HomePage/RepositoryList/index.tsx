@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { RepositoryListProps } from "../../../interfaces";
 import "./RepositoryList.css";
 import RepositoryListItem from "./RepositoryListItem";
@@ -10,25 +10,33 @@ const getFavoritesData = (state: RootState) => state.favorites;
 
 const RepositoryList = ({ repository }: RepositoryListProps) => {
   const favoritesData = useSelector(getFavoritesData);
-  const favRepositories = favoritesData.favorites;
+  const favIDs = useMemo(
+    () => favoritesData.favorites.map((fav) => fav.id),
+    [favoritesData.favorites]
+  );
+
+  const isFavoriteData = useMemo(
+    () => repository.map((repository) => favIDs.includes(repository.id)),
+    [favIDs, repository]
+  );
 
   if (!repository.length) {
     return <div className="no-result">No search results!</div>;
   }
 
-  const favIDs = favRepositories.map((fav) => fav.id);
-
   return (
     <div className="repository-result-container">
       <SortDropdown />
       <table className="repository-table">
-        {repository.map((repository) => (
-          <RepositoryListItem
-            key={repository.id}
-            repository={repository}
-            fav={favIDs.includes(repository.id)}
-          />
-        ))}
+        {repository.map((repository, index) => {
+          return (
+            <RepositoryListItem
+              key={repository.id}
+              repository={repository}
+              isFavorite={isFavoriteData[index]}
+            />
+          );
+        })}
       </table>
     </div>
   );

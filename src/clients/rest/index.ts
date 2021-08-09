@@ -23,7 +23,6 @@ export const getData = async (searchValue: string, sort: string) => {
       url: repository.html_url,
       stars: repository.stargazers_count,
       description: repository.description,
-      updated_at: repository.updated_at,
     };
   });
   return filterData;
