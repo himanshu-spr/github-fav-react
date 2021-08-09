@@ -19,7 +19,11 @@ const HomePage = () => {
     }
   }
 
-  return data.length ? <RepositoryList repository={data} /> : null;
+  return data.length ? (
+    <RepositoryList repository={data} />
+  ) : (
+    <div>No search result</div>
+  );
 };
 
 export default HomePage;

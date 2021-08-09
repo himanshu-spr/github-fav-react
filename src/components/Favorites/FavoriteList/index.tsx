@@ -6,9 +6,9 @@ import "./FavoriteList.css";
 const FavoriteList = ({ favorites }: FavoritesState) => {
   return (
     <table className="favorites-table">
-      {favorites.map((favorite) => {
-        return <FavoriteListItem favorite={favorite} key={favorite.id} />;
-      })}
+      {favorites.map((favorite) => (
+        <FavoriteListItem favorite={favorite} key={favorite.id} />
+      ))}
     </table>
   );
 };

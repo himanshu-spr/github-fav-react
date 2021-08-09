@@ -22,6 +22,7 @@ interface StoreAction {
 
 export interface RepositoryListItemProps {
   repository: Repository;
+  fav: boolean;
 }
 
 export interface RepositoryAction extends StoreAction {
