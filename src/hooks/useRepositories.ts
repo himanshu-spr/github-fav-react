@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 import { useMemo } from "react";
 import axios from "axios";
-import { SORT_TYPES } from "../constants/sort";
+import { SORT_LABELS } from "../components/HomePage/RepositoryList/SortDropdown";
 import { RootState } from "../redux/rootReducer";
 import { useSelector } from "react-redux";
-import { GithubResponse, RepoResponse, Repository } from "../interfaces";
+import { RepoResponse } from "../interfaces";
 
 const getSearchData = (state: RootState) => state.search;
 const getSortData = (state: RootState) => state.sort;
@@ -15,9 +15,9 @@ export default function useRepositories() {
   let searchString =
     "https://api.github.com/search/repositories?q=" + searchData.searchValue;
 
-  if (sortData.sortValue !== SORT_TYPES.BEST_MATCH) {
+  if (sortData.sortValue !== SORT_LABELS.BEST_MATCH) {
     const sortType =
-      sortData.sortValue === SORT_TYPES.MOST_STARS ? "desc" : "asc";
+      sortData.sortValue === SORT_LABELS.MOST_STARS ? "desc" : "asc";
     searchString = searchString + "&sort=stars&order=" + sortType;
   }
 

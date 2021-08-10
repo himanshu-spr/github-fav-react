@@ -12,7 +12,7 @@ export const SORT_LABELS = {
 };
 
 const getOptions = () => {
-  const options = Object.values(SORT_TYPES);
+  const options = Object.values(SORT_LABELS);
   return options.map((option) => (
     <option key={option} value={option}>
       {option}
