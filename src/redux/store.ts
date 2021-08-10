@@ -6,10 +6,8 @@ import { load, save } from "../storage";
 
 const store = createStore(
   rootReducer,
-  { favorites: load("favorites", {}) },
+  { favorites: load("favorites", { favorites: [] }) },
   applyMiddleware(logger, thunk)
 );
-
 store.subscribe(() => save(store.getState(), "favorites"));
-
 export default store;

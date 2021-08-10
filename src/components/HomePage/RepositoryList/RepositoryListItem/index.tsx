@@ -1,24 +1,26 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { RepositoryListItemProps } from "../../../../interfaces";
 import { IoHeartOutline } from "react-icons/io5";
 import { IoHeart } from "react-icons/io5";
 import "./RepositoryListItem.css";
 import { useDispatch } from "react-redux";
 import { addRepository, removeRepository } from "../../../../redux";
+import { getFavAction } from "../../../../helpers";
 
-const RepositoryListItem = ({ repository, fav }: RepositoryListItemProps) => {
-  const [favorite, setFavorite] = useState(fav);
+const RepositoryListItem = ({
+  repository,
+  isFavorite,
+}: RepositoryListItemProps) => {
   const dispatch = useDispatch();
 
   const favChangeHandler = useCallback(() => {
-    if (favorite) {
-      dispatch(removeRepository(repository));
+    const favAction = getFavAction(repository);
+    if (isFavorite) {
+      dispatch(removeRepository(favAction));
     } else {
-      dispatch(addRepository(repository));
+      dispatch(addRepository(favAction));
     }
-
-    setFavorite((prevState) => !prevState);
-  }, [favorite, repository, dispatch]);
+  }, [isFavorite, repository, dispatch]);
 
   return (
     <>
@@ -30,7 +32,7 @@ const RepositoryListItem = ({ repository, fav }: RepositoryListItemProps) => {
         <td className="description-data">{repository.description}</td>
         <td className="stars-data">{repository.stars}</td>
         <td onClick={favChangeHandler}>
-          {favorite ? (
+          {isFavorite ? (
             <IoHeart className="fav-select-fill-icon" />
           ) : (
             <IoHeartOutline className="fav-select-outline-icon" />

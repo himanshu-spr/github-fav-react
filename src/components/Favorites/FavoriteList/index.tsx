@@ -7,7 +7,7 @@ const FavoriteList = ({ favorites }: FavoritesState) => {
   return (
     <table className="favorites-table">
       {favorites.map((favorite) => (
-        <FavoriteListItem favorite={favorite} key={favorite.id} />
+        <FavoriteListItem key={favorite.id} favorite={favorite} />
       ))}
     </table>
   );

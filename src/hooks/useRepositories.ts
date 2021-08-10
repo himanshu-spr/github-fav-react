@@ -3,6 +3,7 @@ import axios from "axios";
 import { SORT_TYPES } from "../constants/sort";
 import { RootState } from "../redux/rootReducer";
 import { useSelector } from "react-redux";
+import { GithubResponse, Repository } from "../interfaces";
 
 const getSearchData = (state: RootState) => state.search;
 const getSortData = (state: RootState) => state.sort;
@@ -21,15 +22,15 @@ export default function useRepositories() {
 
   const { status, data, error } = useQuery(
     ["repositories", searchData.searchValue, sortData.sortValue],
-    () => axios.get(searchString).then((res) => res.data),
+    () => axios.get<GithubResponse>(searchString).then((res) => res.data),
     {
       enabled: searchData.searchValue !== "",
     }
   );
-  let filteredData = [];
+  let filteredData: Repository[] = [];
 
   if (data && data.items) {
-    filteredData = data.items.map((repository: any) => {
+    filteredData = data.items.map((repository) => {
       return {
         id: repository.id,
         name: repository.name,
@@ -38,7 +39,6 @@ export default function useRepositories() {
         url: repository.html_url,
         stars: repository.stargazers_count,
         description: repository.description,
-        updated_at: repository.updated_at,
       };
     });
   }
