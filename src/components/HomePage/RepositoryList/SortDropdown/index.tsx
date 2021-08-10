@@ -5,6 +5,12 @@ import { RootState } from "../../../../redux/rootReducer";
 import { SORT_TYPES } from "../../../../constants/sort";
 import { setSortValue } from "../../../../redux";
 
+export const SORT_LABELS = {
+  [SORT_TYPES.BEST_MATCH]: "Best Match",
+  [SORT_TYPES.MOST_STARS]: "Most Stars",
+  [SORT_TYPES.FEWEST_STARS]: "Fewest Stars",
+};
+
 const getOptions = () => {
   const options = Object.values(SORT_TYPES);
   return options.map((option) => (

@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { FavoriteListItemProps } from "../../../../interfaces";
+import React, { useCallback, useEffect, useState } from "react";
+import { FavoriteListItemProps, Repository } from "../../../../interfaces";
 import "./FavoriteListItem.css";
 import { useDispatch } from "react-redux";
 import { removeRepository } from "../../../../redux";

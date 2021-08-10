@@ -9,14 +9,12 @@ const getFavoritesData = (state: RootState) => state.favorites;
 
 const Favorites = () => {
   const favoritesData: FavoritesState = useSelector(getFavoritesData);
-
-  const favRepositories = favoritesData.favorites;
   return (
     <div className="fav-container">
-      {favRepositories.length === 0 ? (
+      {favoritesData.favorites.length === 0 ? (
         <div className="no-result-container">No Favorite Repositories!</div>
       ) : (
-        <FavoriteList favorites={favRepositories} />
+        <FavoriteList favorites={favoritesData.favorites} />
       )}
     </div>
   );
