@@ -13,13 +13,13 @@ export default function useRepository(favorite: FavoriteData) {
 
   const filteredData = useMemo(
     () => ({
-      id: (data || {}).id,
-      name: (data || {}).name,
-      full_name: (data || {}).full_name,
-      avatar: (data || { owner: {} }).owner.avatar_url,
-      url: (data || {}).html_url,
-      stars: (data || {}).stargazers_count,
-      description: (data || {}).description,
+      id: data?.id,
+      name: data?.name,
+      full_name: data?.full_name,
+      avatar: data?.owner?.avatar_url,
+      url: data?.html_url,
+      stars: data?.stargazers_count,
+      description: data?.description,
     }),
     [data]
   );
