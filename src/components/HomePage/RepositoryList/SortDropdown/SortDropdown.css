@@ -1,0 +1,24 @@
+.sort-container {
+  margin-top: 2.5rem;
+  width: 85%;
+  display: flex;
+}
+
+.sort-container div {
+  margin-right: 0.1rem;
+  margin-left: auto;
+}
+
+.sort-container select {
+  padding: 0.1rem;
+  font-size: 0.9rem;
+  background-color: #455a64;
+  border-radius: 4px;
+  color: white;
+}
+
+.sort-title {
+  display: inline-block;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}

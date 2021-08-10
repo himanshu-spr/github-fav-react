@@ -1,0 +1,10 @@
+.fav-container {
+  margin: 4rem;
+  display: flex;
+  justify-content: center;
+}
+
+.no-result-container {
+  font-size: 2rem;
+  margin-top: 4rem;
+}
