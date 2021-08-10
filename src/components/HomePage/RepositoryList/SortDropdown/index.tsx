@@ -7,10 +7,10 @@ import {
   fetchRepositoryFailure,
   fetchRepositoryRequest,
   fetchRepositorySuccess,
-} from "../../../../redux/repository/repositoryAction";
+  setSortValue,
+} from "../../../../redux";
 
 import { SORT_TYPES } from "../../../../constants/sort";
-import { setSortValue } from "../../../../redux";
 
 export const SORT_LABELS = {
   [SORT_TYPES.BEST_MATCH]: "Best Match",
