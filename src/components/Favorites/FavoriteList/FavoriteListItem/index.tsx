@@ -4,7 +4,6 @@ import "./FavoriteListItem.css";
 import { useDispatch } from "react-redux";
 import { removeRepository } from "../../../../redux";
 import useRepository from "../../../../hooks/useRepository";
-import { isError } from "../../../../helpers";
 
 const FavoriteListItem = ({ favorite }: FavoriteListItemProps) => {
   const dispatch = useDispatch();
@@ -18,32 +17,28 @@ const FavoriteListItem = ({ favorite }: FavoriteListItemProps) => {
     return <p className="loading">Loading...</p>;
   }
 
-  if (status === "error") {
-    if (isError(error)) {
-      return <p className="error">{error.message}</p>;
-    } else {
-      return <p className="error">Error. Try Again</p>;
-    }
+  if (status === "error" && error) {
+    return <p className="error">{error.message}</p>;
   }
 
+  if (!data) return null;
+
   return (
-    data && (
-      <>
-        <tr key={data.id}>
-          <td className="fav-image-data">
-            <img src={data.avatar} alt={data.full_name} />
-          </td>
-          <td className="fav-name-data">{data.full_name}</td>
-          <td className="fav-description-data">{data.description}</td>
-          <td className="fav-stars-data">{data.stars}</td>
-          <td>
-            <button className="remove-button" onClick={removeHandler}>
-              Remove
-            </button>
-          </td>
-        </tr>
-      </>
-    )
+    <>
+      <tr key={data.id}>
+        <td className="fav-image-data">
+          <img src={data.avatar} alt={data.full_name} />
+        </td>
+        <td className="fav-name-data">{data.full_name}</td>
+        <td className="fav-description-data">{data.description}</td>
+        <td className="fav-stars-data">{data.stars}</td>
+        <td>
+          <button className="remove-button" onClick={removeHandler}>
+            Remove
+          </button>
+        </td>
+      </tr>
+    </>
   );
 };
 

@@ -1,9 +1,10 @@
 import { useQuery } from "react-query";
+import { useMemo } from "react";
 import axios from "axios";
 import { SORT_TYPES } from "../constants/sort";
 import { RootState } from "../redux/rootReducer";
 import { useSelector } from "react-redux";
-import { GithubResponse, Repository } from "../interfaces";
+import { GithubResponse, RepoResponse, Repository } from "../interfaces";
 
 const getSearchData = (state: RootState) => state.search;
 const getSortData = (state: RootState) => state.sort;
@@ -20,27 +21,28 @@ export default function useRepositories() {
     searchString = searchString + "&sort=stars&order=" + sortType;
   }
 
-  const { status, data, error } = useQuery(
+  const { status, data, error } = useQuery<RepoResponse[], Error>(
     ["repositories", searchData.searchValue, sortData.sortValue],
-    () => axios.get<GithubResponse>(searchString).then((res) => res.data),
+    () => axios.get(searchString).then((res) => res.data.items),
     {
       enabled: searchData.searchValue !== "",
     }
   );
-  let filteredData: Repository[] = [];
+  const filteredData = useMemo(
+    () =>
+      (data || []).map((repository) => {
+        return {
+          id: repository.id,
+          name: repository.name,
+          full_name: repository.full_name,
+          avatar: repository.owner.avatar_url,
+          url: repository.html_url,
+          stars: repository.stargazers_count,
+          description: repository.description,
+        };
+      }),
+    [data]
+  );
 
-  if (data && data.items) {
-    filteredData = data.items.map((repository) => {
-      return {
-        id: repository.id,
-        name: repository.name,
-        full_name: repository.full_name,
-        avatar: repository.owner.avatar_url,
-        url: repository.html_url,
-        stars: repository.stargazers_count,
-        description: repository.description,
-      };
-    });
-  }
   return { status, data: filteredData, error };
 }
