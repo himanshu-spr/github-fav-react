@@ -7,15 +7,15 @@ import {
   fetchRepositoryFailure,
   fetchRepositoryRequest,
   fetchRepositorySuccess,
-  setSortValue,
-} from "../../../../redux";
+} from "../../../../redux/repository/repositoryAction";
 
-import { sort_types } from "../../../../constants/sort";
+import { SORT_TYPES } from "../../../../constants/sort";
+import { setSortValue } from "../../../../redux";
 
 export const SORT_LABELS = {
-  [sort_types.BEST_MATCH]: "Best Match",
-  [sort_types.MOST_STARS]: "Most Stars",
-  [sort_types.FEWEST_STARS]: "Fewest Stars",
+  [SORT_TYPES.BEST_MATCH]: "Best Match",
+  [SORT_TYPES.MOST_STARS]: "Most Stars",
+  [SORT_TYPES.FEWEST_STARS]: "Fewest Stars",
 };
 
 const getOptions = () => {

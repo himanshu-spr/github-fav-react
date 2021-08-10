@@ -15,7 +15,7 @@ const HomePage = () => {
   }
 
   if (repositoryData.error) {
-    <p className="error">{repositoryData.error}</p>;
+    return <p className="error">{repositoryData.error}</p>;
   }
 
   return <RepositoryList repository={repositoryData.repository} />;
