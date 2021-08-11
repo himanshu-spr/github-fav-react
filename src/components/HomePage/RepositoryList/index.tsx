@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { RepositoryListProps, FavoriteData } from "../../../interfaces";
 import "./RepositoryList.css";
 import RepositoryListItem from "./RepositoryListItem";
-import SortDropdown from "./SortDropdown";
 import { RootState } from "../../../redux/rootReducer";
 import { useSelector } from "react-redux";
 import { useCallback } from "react";
@@ -16,7 +15,7 @@ const getFavId = (favorites: FavoriteData[]) => {
   return favIdSet;
 };
 
-const RepositoryList = ({ repository }: RepositoryListProps) => {
+const RepositoryList = ({ repositories }: RepositoryListProps) => {
   const favoritesData = useSelector(getFavoritesData);
 
   const favIdSet = useMemo(
@@ -26,25 +25,24 @@ const RepositoryList = ({ repository }: RepositoryListProps) => {
 
   const renderOptions = useCallback(
     () =>
-      repository.map((repository) => {
+      repositories.map((repository) => {
         return (
           <RepositoryListItem
-            key={repository.id}
-            repository={repository}
-            isFavorite={favIdSet.has(repository.id)}
+            key={repository.node.id}
+            repository={repository.node}
+            isFavorite={favIdSet.has(repository.node.id)}
           />
         );
       }),
-    [repository, favIdSet]
+    [repositories, favIdSet]
   );
 
-  if (!repository.length) {
+  if (!repositories.length) {
     return <div className="no-result">No search results!</div>;
   }
 
   return (
     <div className="repository-result-container">
-      <SortDropdown />
       <table className="repository-table">{renderOptions()}</table>
     </div>
   );
