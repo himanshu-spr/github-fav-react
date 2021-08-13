@@ -1,39 +1,19 @@
 import React, { useState, useCallback } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./SearchBar.css";
-import { getData } from "../../../clients/rest";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../redux/rootReducer";
-import { SortState } from "../../../interfaces";
-
-import {
-  fetchRepositoryFailure,
-  fetchRepositoryRequest,
-  fetchRepositorySuccess,
-  setSearchValue,
-} from "../../../redux";
-
-const getSortData = (state: RootState) => state.sort;
+import { useDispatch } from "react-redux";
+import { setSearchValue } from "../../../redux";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");
-  const sortData: SortState = useSelector(getSortData);
   const dispatch = useDispatch();
 
   const submitHandler = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-
-      try {
-        dispatch(setSearchValue(search));
-        dispatch(fetchRepositoryRequest());
-        const data = await getData(search, sortData.sortValue);
-        dispatch(fetchRepositorySuccess(data));
-      } catch (error) {
-        dispatch(fetchRepositoryFailure(error.message));
-      }
+      dispatch(setSearchValue(search));
     },
-    [search, dispatch, sortData.sortValue]
+    [search, dispatch]
   );
 
   const changeHandler = useCallback((e) => {
