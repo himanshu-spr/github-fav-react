@@ -1,51 +1,44 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { FavoriteListItemProps, Repository } from "../../../../interfaces";
+import React, { useCallback } from "react";
+import { FavoriteListItemProps } from "../../../../interfaces";
 import "./FavoriteListItem.css";
 import { useDispatch } from "react-redux";
 import { removeRepository } from "../../../../redux";
-import { getFavData } from "../../../../clients/rest";
+import useRepository from "../../../../hooks/useRepository";
 
 const FavoriteListItem = ({ favorite }: FavoriteListItemProps) => {
   const dispatch = useDispatch();
-  const [favoriteData, setFavoriteData] = useState<Repository | null>(null);
-
-  useEffect(() => {
-    let mounted = true;
-    async function getData() {
-      const data = await getFavData(favorite);
-      if (mounted) {
-        setFavoriteData(data);
-      }
-    }
-    getData();
-
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  const { isError, isLoading, data, error } = useRepository(favorite);
 
   const removeHandler = useCallback(() => {
     dispatch(removeRepository(favorite));
   }, [dispatch, favorite]);
 
+  if (isLoading) {
+    return <p className="loading">Loading...</p>;
+  }
+
+  if (isError && error) {
+    return <p className="error">{error.message}</p>;
+  }
+
+  if (!data) return null;
+
   return (
-    favoriteData && (
-      <>
-        <tr key={favoriteData.id}>
-          <td className="fav-image-data">
-            <img src={favoriteData.avatar} alt={favoriteData.full_name} />
-          </td>
-          <td className="fav-name-data">{favoriteData.full_name}</td>
-          <td className="fav-description-data">{favoriteData.description}</td>
-          <td className="fav-stars-data">{favoriteData.stars}</td>
-          <td>
-            <button className="remove-button" onClick={removeHandler}>
-              Remove
-            </button>
-          </td>
-        </tr>
-      </>
-    )
+    <>
+      <tr key={data.id}>
+        <td className="fav-image-data">
+          <img src={data.avatar} alt={data.full_name} />
+        </td>
+        <td className="fav-name-data">{data.full_name}</td>
+        <td className="fav-description-data">{data.description}</td>
+        <td className="fav-stars-data">{data.stars}</td>
+        <td>
+          <button className="remove-button" onClick={removeHandler}>
+            Remove
+          </button>
+        </td>
+      </tr>
+    </>
   );
 };
 
