@@ -4,13 +4,13 @@ import useRepositories from "../../hooks/useRepositories";
 import RepositoryList from "./RepositoryList";
 
 const HomePage = () => {
-  const { status, data, error } = useRepositories();
+  const { isError, isLoading, data, error } = useRepositories();
 
-  if (status === "loading") {
+  if (isLoading) {
     return <p className="loading">Loading...</p>;
   }
 
-  if (status === "error" && error) {
+  if (isError && error) {
     return <p className="error">{error.message}</p>;
   }
 

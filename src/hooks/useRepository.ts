@@ -6,7 +6,7 @@ import { FavoriteData, RepoResponse } from "../interfaces";
 export default function useRepository(favorite: FavoriteData) {
   let searchString = "https://api.github.com/repos/" + favorite.fullname;
 
-  const { status, data, error } = useQuery<RepoResponse, Error>(
+  const { isError, isLoading, data, error } = useQuery<RepoResponse, Error>(
     ["repository", favorite.fullname],
     () => axios.get(searchString).then((res) => res.data)
   );
@@ -23,5 +23,5 @@ export default function useRepository(favorite: FavoriteData) {
     }),
     [data]
   );
-  return { status, data: filteredData, error };
+  return { isError, isLoading, data: filteredData, error };
 }

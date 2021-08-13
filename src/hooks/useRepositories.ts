@@ -21,7 +21,7 @@ export default function useRepositories() {
     searchString = searchString + "&sort=stars&order=" + sortType;
   }
 
-  const { status, data, error } = useQuery<RepoResponse[], Error>(
+  const { isError, isLoading, data, error } = useQuery<RepoResponse[], Error>(
     ["repositories", searchData.searchValue, sortData.sortValue],
     () => axios.get(searchString).then((res) => res.data.items),
     {
@@ -44,5 +44,5 @@ export default function useRepositories() {
     [data]
   );
 
-  return { status, data: filteredData, error };
+  return { isError, isLoading, data: filteredData, error };
 }

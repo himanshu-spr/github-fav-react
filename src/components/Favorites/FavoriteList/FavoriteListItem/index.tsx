@@ -7,17 +7,17 @@ import useRepository from "../../../../hooks/useRepository";
 
 const FavoriteListItem = ({ favorite }: FavoriteListItemProps) => {
   const dispatch = useDispatch();
-  const { status, data, error } = useRepository(favorite);
+  const { isError, isLoading, data, error } = useRepository(favorite);
 
   const removeHandler = useCallback(() => {
     dispatch(removeRepository(favorite));
   }, [dispatch, favorite]);
 
-  if (status === "loading") {
+  if (isLoading) {
     return <p className="loading">Loading...</p>;
   }
 
-  if (status === "error" && error) {
+  if (isError && error) {
     return <p className="error">{error.message}</p>;
   }
 
