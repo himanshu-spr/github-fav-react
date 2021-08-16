@@ -6,40 +6,28 @@ import { setSearchValue } from "../../../redux";
 import debounce from "lodash/debounce";
 
 const SearchBar = () => {
-  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
-  const submitHandler: React.FormEventHandler<HTMLFormElement> = useCallback(
-    (e) => {
-      e.preventDefault();
-    },
-    []
-  );
 
   const delayedHandleChange = useCallback(
     debounce((eventData) => dispatch(setSearchValue(eventData)), 500),
     [dispatch]
   );
-
-  const changeHandler: React.ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      setSearch(e.target.value);
-      delayedHandleChange(e.target.value);
-    },
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
+    (event) => delayedHandleChange(event.target.value),
     [delayedHandleChange]
   );
 
   return (
-    <form className="search-bar" onSubmit={submitHandler}>
+    <div className="search-bar">
       <input
         type="text"
         name="search"
         className="search-input"
         placeholder="Search"
-        value={search}
-        onChange={changeHandler}
+        onChange={handleChange}
       />
       <FaSearch className="search-icon" />
-    </form>
+    </div>
   );
 };
 
