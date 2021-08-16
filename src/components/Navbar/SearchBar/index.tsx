@@ -8,13 +8,9 @@ import debounce from "lodash/debounce";
 const SearchBar = () => {
   const dispatch = useDispatch();
 
-  const delayedHandleChange = useCallback(
-    debounce((eventData) => dispatch(setSearchValue(eventData)), 500),
-    [dispatch]
-  );
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
-    (event) => delayedHandleChange(event.target.value),
-    [delayedHandleChange]
+    debounce((event) => dispatch(setSearchValue(event.target.value)), 500),
+    [dispatch]
   );
 
   return (
