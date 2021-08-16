@@ -1,37 +1,29 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./SearchBar.css";
 import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../../redux";
+import debounce from "lodash/debounce";
 
 const SearchBar = () => {
-  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
 
-  const submitHandler = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      dispatch(setSearchValue(search));
-    },
-    [search, dispatch]
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
+    debounce((event) => dispatch(setSearchValue(event.target.value)), 500),
+    [dispatch]
   );
 
-  const changeHandler = useCallback((e) => {
-    setSearch(e.target.value);
-  }, []);
-
   return (
-    <form className="search-bar" onSubmit={submitHandler}>
+    <div className="search-bar">
       <input
         type="text"
         name="search"
         className="search-input"
         placeholder="Search"
-        value={search}
-        onChange={changeHandler}
+        onChange={handleChange}
       />
       <FaSearch className="search-icon" />
-    </form>
+    </div>
   );
 };
 
