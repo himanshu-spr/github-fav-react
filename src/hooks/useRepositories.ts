@@ -17,10 +17,36 @@ export default function useRepositories() {
         queryString: searchData.searchValue,
       });
 
+<<<<<<< HEAD
       return data?.search?.edges;
     },
+=======
+  const { isError, isLoading, data, error } = useQuery<RepoResponse[], Error>(
+    ["repositories", searchData.searchValue, sortData.sortValue],
+    () => axios.get(searchString).then((res) => res.data.items),
+>>>>>>> react-query
     {
       enabled: !!searchData.searchValue,
     }
   );
+<<<<<<< HEAD
+=======
+  const filteredData = useMemo(
+    () =>
+      (data || []).map((repository) => {
+        return {
+          id: repository.id,
+          name: repository.name,
+          full_name: repository.full_name,
+          avatar: repository.owner.avatar_url,
+          url: repository.html_url,
+          stars: repository.stargazers_count,
+          description: repository.description,
+        };
+      }),
+    [data]
+  );
+
+  return { isError, isLoading, data: filteredData, error };
+>>>>>>> react-query
 }
