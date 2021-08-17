@@ -4,9 +4,8 @@ import { SearchState, SearchValueAction } from "../../interfaces";
 const initialState: SearchState = {
   searchValue: "",
 };
-let counter = 1;
+
 const reducer = (state = initialState, action: SearchValueAction) => {
-  console.log(counter++);
   switch (action.type) {
     case SET_SEARCH_VALUE:
       return {
