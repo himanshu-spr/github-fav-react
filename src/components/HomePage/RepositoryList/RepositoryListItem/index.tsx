@@ -26,11 +26,14 @@ const RepositoryListItem = ({
     <>
       <tr key={repository.id}>
         <td className="image-data">
-          <img src={repository.avatar} alt={repository.full_name} />
+          <img
+            src={repository.owner.avatarUrl}
+            alt={repository.nameWithOwner}
+          />
         </td>
-        <td className="name-data">{repository.full_name}</td>
+        <td className="name-data">{repository.nameWithOwner}</td>
         <td className="description-data">{repository.description}</td>
-        <td className="stars-data">{repository.stars}</td>
+        <td className="stars-data">{repository.stargazerCount}</td>
         <td onClick={favChangeHandler}>
           {isFavorite ? (
             <IoHeart className="fav-select-fill-icon" />

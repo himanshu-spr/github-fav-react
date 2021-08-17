@@ -15,7 +15,12 @@
     "@types/react-redux": "^7.1.18",
     "@types/react-router-dom": "^5.1.8",
     "axios": "^0.21.1",
+<<<<<<< HEAD
+    "graphql": "^15.5.1",
+    "graphql-request": "^3.5.0",
+=======
     "lodash": "^4.17.21",
+>>>>>>> react-query
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",

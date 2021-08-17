@@ -1,29 +1,24 @@
 export interface Repository {
-  id: number;
-  name: string;
-  full_name: string;
-  avatar: string;
-  url: string;
-  stars: number;
+  id: string;
   description: string;
+  stargazerCount: number;
+  url: string;
+  owner: {
+    login: string;
+    avatarUrl: string;
+  };
+  name: string;
+  nameWithOwner: string;
 }
 
-export interface RepoResponse {
-  id: number;
-  name: string;
-  full_name: string;
-  owner: {
-    avatar_url: string;
-  };
-  html_url: string;
-  description: string;
-  stargazers_count: number;
+export interface Repositories {
+  node: Repository;
 }
 
 export interface GithubResponse {
   total_count: number;
   incomplete_results: boolean;
-  items: RepoResponse[];
+  items: Repository[];
 }
 
 interface StoreAction {
@@ -52,7 +47,7 @@ export interface RepositoryState {
 }
 
 export interface RepositoryListProps {
-  repository: Repository[];
+  repositories: Repositories[];
 }
 
 export interface FavoritesAction extends StoreAction {
@@ -68,8 +63,9 @@ export interface SearchValueState {
 }
 
 export interface FavoriteData {
-  id: number;
-  fullname: string;
+  id: string;
+  name: string;
+  owner: string;
 }
 
 export interface FavoritesState {
