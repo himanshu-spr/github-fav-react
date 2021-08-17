@@ -1,4 +1,5 @@
 import { gql } from "graphql-request";
+import { REPOSITORY_DATA } from "./fragments";
 
 export const GET_REPOSITORIES = gql`
   query GetRepositories($queryString: String!) {
@@ -7,16 +8,7 @@ export const GET_REPOSITORIES = gql`
       edges {
         node {
           ... on Repository {
-            id
-            description
-            stargazerCount
-            url
-            owner {
-              login
-              avatarUrl
-            }
-            name
-            nameWithOwner
+            ${REPOSITORY_DATA}
           }
         }
       }
@@ -27,16 +19,7 @@ export const GET_REPOSITORIES = gql`
 export const GET_REPOSITORY = gql`
   query GetRepository($name: String!, $owner: String!) {
     repository(name: $name, owner: $owner) {
-      id
-      description
-      stargazerCount
-      url
-      owner {
-        login
-        avatarUrl
-      }
-      name
-      nameWithOwner
+      ${REPOSITORY_DATA}
     }
   }
 `;
