@@ -27,11 +27,11 @@ const FavoriteListItem = ({ favorite }: FavoriteListItemProps) => {
     <>
       <tr key={data.id}>
         <td className="fav-image-data">
-          <img src={data.avatar} alt={data.full_name} />
+          <img src={data.owner.avatarUrl} alt={data.nameWithOwner} />
         </td>
-        <td className="fav-name-data">{data.full_name}</td>
+        <td className="fav-name-data">{data.nameWithOwner}</td>
         <td className="fav-description-data">{data.description}</td>
-        <td className="fav-stars-data">{data.stars}</td>
+        <td className="fav-stars-data">{data.stargazerCount}</td>
         <td>
           <button className="remove-button" onClick={removeHandler}>
             Remove

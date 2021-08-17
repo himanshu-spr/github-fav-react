@@ -14,11 +14,11 @@ const HomePage = () => {
     return <p className="error">{error.message}</p>;
   }
 
-  return data.length ? (
-    <RepositoryList repository={data} />
-  ) : (
-    <div>No search result</div>
-  );
+  if (!data) {
+    return <p className="loading">No search results!</p>;
+  }
+
+  return <RepositoryList repositories={data} />;
 };
 
 export default HomePage;

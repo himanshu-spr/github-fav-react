@@ -1,11 +1,25 @@
 import { useQuery } from "react-query";
-import axios from "axios";
-import { useMemo } from "react";
-import { FavoriteData, RepoResponse } from "../interfaces";
+import { graphQLClient } from "../helpers";
+import { GET_REPOSITORY } from "../queries";
+import { FavoriteData, Repository } from "../interfaces";
 
 export default function useRepository(favorite: FavoriteData) {
-  let searchString = "https://api.github.com/repos/" + favorite.fullname;
+  return useQuery<Repository, Error>(
+    ["repository", favorite.id],
+    async () => {
+      const { repository } = await graphQLClient.request(GET_REPOSITORY, {
+        name: favorite.name,
+        owner: favorite.owner,
+      });
 
+<<<<<<< HEAD
+      return repository;
+    },
+    {
+      enabled: !!favorite.id,
+    }
+  );
+=======
   const { isError, isLoading, data, error } = useQuery<RepoResponse, Error>(
     ["repository", favorite.fullname],
     () => axios.get(searchString).then((res) => res.data)
@@ -24,4 +38,5 @@ export default function useRepository(favorite: FavoriteData) {
     [data]
   );
   return { isError, isLoading, data: filteredData, error };
+>>>>>>> react-query
 }
